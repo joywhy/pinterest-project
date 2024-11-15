@@ -1,3 +1,5 @@
+# 프로젝트 환경설정
+
 npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 
@@ -101,3 +103,5 @@ npx shadcn@latest add input
 npx shadcn@latest add pagination
 npx shadcn@latest add separator
 npx shadcn@latest add skeleton
+
+npm install react-router-dom
