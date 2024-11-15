@@ -5,6 +5,7 @@ function HomePage() {
     <div className="page">
       <div className="page__container">
         <Header />
+        dfd
       </div>
     </div>
   );
