@@ -2,4 +2,4 @@ function Nav() {
   return <div>Nav</div>;
 }
 
-export default Nav;
+export { Nav };

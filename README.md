@@ -105,3 +105,5 @@ npx shadcn@latest add separator
 npx shadcn@latest add skeleton
 
 npm install react-router-dom
+
+npm install -D sass-embedded
