@@ -1,3 +1,4 @@
+리액트 + 타입스크립트  + 샤드신 + scss 조합으로 세팅했습니다. 
 # 프로젝트 환경설정
 
 npm install -D tailwindcss postcss autoprefixer
