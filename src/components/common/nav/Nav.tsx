@@ -13,7 +13,7 @@ function Nav() {
   const { pathname } = useLocation();
 
   return (
-    <div className="flex justify-center py-4 items-center border border-red-600 gap-4 ">
+    <div className="flex justify-center py-4 items-center  gap-4 ">
       {navJson?.map((nav: NavData, index) => {
         const isActive =
           pathname === nav.path.split('/').pop() ||
@@ -24,7 +24,7 @@ function Nav() {
             <div className="flex items-center gap-1">
               <span
                 className={cn(
-                  ' p-2 rounded-md',
+                  ' p-2 rounded-md hover:bg-gray-400',
                   isActive && 'bg-gray-600 text-white'
                 )}
               >

@@ -22,3 +22,16 @@ export {
 export { Separator } from './separator';
 
 export { Skeleton } from './skeleton';
+export { SearchBar } from './SearchBar';
+export {
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogTrigger,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+} from './dialog';
