@@ -15,8 +15,8 @@ function Header() {
       <div className={styles[`header__logo-box`]}>
         <Link to={'/bookmark'}>
           <img
-            src="src/assets/logo.svg"
-            alt=""
+            src="src/assets/image/react.svg"
+            alt="dfd"
             className={styles[`header__logo-box__logo`]}
           />
         </Link>

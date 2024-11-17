@@ -1,1 +1,62 @@
-[{ "id": 0, "label": "df" }]
+[
+  {
+    "path": "/search/edit",
+    "label": "보도/편집 전용",
+    "searchValue": "edit"
+  },
+  {
+    "path": "/search/following",
+    "label": "팔로잉",
+    "searchValue": "following"
+  },
+  {
+    "path": "/search/photo-plus",
+    "label": "Unsplash Photo+",
+    "searchValue": "photo"
+  },
+  {
+    "path": "/search/one-color",
+    "label": "단색",
+    "searchValue": "one color"
+  },
+  {
+    "path": "/search/3d-render",
+    "label": "3D 렌더링",
+    "searchValue": "3d rendering"
+  },
+  {
+    "path": "/search/nature",
+    "label": "자연",
+    "searchValue": "nature"
+  },
+  {
+    "path": "/search/texture",
+    "label": "텍스쳐 및 패턴",
+    "searchValue": "texture"
+  },
+  {
+    "path": "/search/interior",
+    "label": "인테리어",
+    "searchValue": "interior"
+  },
+  {
+    "path": "/search/film",
+    "label": "필름",
+    "searchValue": "film"
+  },
+  {
+    "path": "/search/experimental",
+    "label": "실험적인",
+    "searchValue": "experimental"
+  },
+  {
+    "path": "/search/travel",
+    "label": "여행",
+    "searchValue": "travel"
+  },
+  {
+    "path": "/search/sports",
+    "label": "스포츠",
+    "searchValue": "sports"
+  }
+]
