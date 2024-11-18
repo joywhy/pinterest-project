@@ -1,4 +1,5 @@
-리액트 + 타입스크립트  + 샤드신 + scss 조합으로 세팅했습니다. 
+리액트 + 타입스크립트 + 샤드신 + scss 조합으로 세팅했습니다.
+
 # 프로젝트 환경설정
 
 npm install -D tailwindcss postcss autoprefixer
@@ -104,7 +105,7 @@ npx shadcn@latest add input
 npx shadcn@latest add pagination
 npx shadcn@latest add separator
 npx shadcn@latest add skeleton
-
+npx shadcn@latest add toast
 npm install react-router-dom
 
 npm install -D sass-embedded
