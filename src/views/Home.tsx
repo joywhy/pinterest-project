@@ -19,7 +19,7 @@ function HomePage() {
   const [page] = useAtom(pageAtom);
   const [images, setImages] = useState([]);
 
-  const [pageIndex] = useState<number>(0);
+  // const [pageIndex] = useState<number>(0);
 
   // const data: ImageDataProps[] = [
   //   {
@@ -100,9 +100,9 @@ function HomePage() {
   }, [searchValue, page, fetchImages]);
 
   return (
-    <div className="w-full  border border-red-500">
+    <div className="w-full  ">
       <Banner />
-      <div className="w-full  grid grid-cols-5 grid-rows-2 gap-[30px] p-[30px] border border-blue-500">
+      <div className="w-full  grid grid-cols-5 grid-rows-2 gap-[30px] p-[30px] ">
         {images.map((item: ImageDataProps, idx) => {
           return (
             <ImageCard key={`${idx}-image-card`}>

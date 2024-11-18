@@ -3,6 +3,8 @@ import { Header, Nav } from '@/components/common';
 
 import Home from './views/Home';
 import Bookmark from './views/Bookmark';
+import { Toaster } from '@/components/ui/toaster';
+
 import { Outlet } from 'react-router-dom';
 function App() {
   return (
@@ -11,8 +13,10 @@ function App() {
         <Route element={<CommonLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/bookmark" element={<Bookmark />} />
+          <Route path="/search/*" element={<Home />} />
         </Route>
       </Routes>
+      <Toaster />
     </BrowserRouter>
   );
 }
