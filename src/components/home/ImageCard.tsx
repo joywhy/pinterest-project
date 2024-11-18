@@ -52,9 +52,6 @@ function ImageCardContent({ children }: { children: React.ReactNode }) {
   );
 }
 
-// function ModalButton() {
-//     return ();
-// }
 function ImageTitle({ description }: { description: string }) {
   return (
     <small className="w-full gap-1 text-s font-medium line-clamp-2">
