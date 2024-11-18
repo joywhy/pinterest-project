@@ -8,22 +8,24 @@ import {
   Separator,
 } from '@/components/ui';
 import { BookMarked } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
+  const navigate = useNavigate();
   return (
     <header className={styles.header}>
       <div className={styles[`header__logo-box`]}>
-        <Link to={'/bookmark'}>
+        <Link to={'/'}>
           <img
             src="src/assets/image/react.svg"
-            alt="dfd"
+            alt="로고"
             className={styles[`header__logo-box__logo`]}
           />
         </Link>
       </div>
       <div className={styles[`header__user-box`]}>
         {/* 북마크 버튼 */}
-        <Button variant={'secondary'}>
+        <Button variant={'secondary'} onClick={() => navigate('/bookmark')}>
           <BookMarked />
           북마크
         </Button>

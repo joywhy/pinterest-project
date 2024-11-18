@@ -1,12 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-// import { useLocation } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { searchValueAtom, pageAtom, fetchApi } from '@/store';
 import Banner from '../components/home/Banner';
 import {
   ImageThumbnail,
   ImageCardContent,
-  ImageDataProps,
+  // ImageDataProps,
   ImageCard,
   ImageTitle,
   ImageDescription,

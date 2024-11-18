@@ -12,9 +12,9 @@ function App() {
       <Routes>
         <Route element={<CommonLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/bookmark" element={<Bookmark />} />
           <Route path="/search/*" element={<Home />} />
         </Route>
+        <Route path="/bookmark" element={<Bookmark />} />
       </Routes>
       <Toaster />
     </BrowserRouter>
