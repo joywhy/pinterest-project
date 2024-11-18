@@ -1,35 +1,25 @@
-// import { Children, useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+// import { useLocation } from 'react-router-dom';
+import { useAtom } from 'jotai';
+import { searchValueAtom, pageAtom, fetchApi } from '@/store';
 import Banner from '../components/home/Banner';
+import {
+  ImageThumbnail,
+  ImageCardContent,
+  ImageDataProps,
+  ImageCard,
+  ImageTitle,
+  ImageDescription,
+} from '@/components/home/ImageCard';
+import { useToast } from '@/hooks/use-toast';
 
-// import {
-//   Avatar,
-//   AvatarFallback,
-//   AvatarImage,
-//   Button,
-//   Dialog,
-//   DialogContent,
-//   DialogDescription,
-//   DialogHeader,
-//   DialogTitle,
-//   DialogTrigger,
-//   Skeleton,
-// } from '@/components/ui';
-// import {
-//   AlignLeft,
-//   ClipboardPenLine,
-//   FolderOpen,
-//   Heart,
-//   Pin,
-// } from 'lucide-react';
-// interface ImageDataProps {
-//   id: number;
-//   des: string;
-//   date: string;
-//   img: string;
-//   like: number;
-// }
 function HomePage() {
-  // const [pageIndex, setPageIndex] = useState<number>(0);
+  const { toast } = useToast();
+  const [searchValue, setSearchValue] = useAtom(searchValueAtom);
+  const [page] = useAtom(pageAtom);
+  const [images, setImages] = useState([]);
+
+  // const [pageIndex] = useState<number>(0);
 
   // const data: ImageDataProps[] = [
   //   {
@@ -76,43 +66,60 @@ function HomePage() {
   //   },
   // ].slice(pageIndex, 6);
   //  6개 미만일때도 생각
+
+  const fetchImages = useCallback(async () => {
+    try {
+      const res = await fetchApi(searchValue, page);
+      console.log(res);
+      console.log(searchValue);
+
+      if (res.status === 200 && res.data) {
+        setImages(res.data.results);
+        toast({
+          title: 'Unsplash API 호출 성공!!',
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Unsplash API 호출 실패!!',
+          description: 'API 호출을 위한 필수 파라미터 값을 체크해보세요!',
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast({
+        variant: 'destructive',
+        title: 'Unsplash API 호출 실패!!',
+        description: 'API 호출을 위한 필수 파라미터 값을 체크해보세요!',
+      });
+    }
+  }, [searchValue, page, toast]);
+
+  useEffect(() => {
+    fetchImages();
+  }, [searchValue, page, fetchImages]);
+
   return (
-    <div className="w-full  border border-red-500">
+    <div className="w-full  ">
       <Banner />
-      <div className="w-full h-[500px] grid grid-cols-4 grid-rows-2 gap-[30px] p-[30px] border border-blue-500">
-        {/* {data.map((item, idx) => {
-          return <ImageCard {...item} key={idx + '이미지 카드'} />;
-        })} */}
+      <div className="w-full  grid grid-cols-5 grid-rows-2 gap-[30px] p-[30px] ">
+        {images.map((item: ImageDataProps, idx) => {
+          return (
+            <ImageCard key={`${idx}-image-card`}>
+              <ImageThumbnail data={item} />
+              <ImageCardContent>
+                <ImageTitle description={item.description} />
+                <ImageDescription
+                  created_at={item.created_at}
+                  likes={item.likes}
+                />
+              </ImageCardContent>
+            </ImageCard>
+          );
+        })}
       </div>
     </div>
   );
 }
 
-// function ImageCard(data: ImageDataProps) {
-//   return (
-//     <div className="border border-red-400">
-//       <ImageThumbnail img={data.img}>
-//         <ModalButton data={data} />
-//       </ImageThumbnail>
-//     </div>
-//   );
-// }
-
-// function ImageThumbnail({
-//   img,
-//   children,
-// }: {
-//   img: string;
-//   children: React.ReactNode;
-// }) {
-//   return (
-//     <div className="w-full h-[100px] rounded-md relative">
-//       <img src={img} alt="이미지" />
-//       {children}
-//     </div>
-//   );
-// }
-// function ImageCardContent({ children }: { children: React.ReactNode }) {
-//   return <div>{children}</div>;
-// }
 export default HomePage;
