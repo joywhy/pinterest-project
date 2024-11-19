@@ -103,6 +103,7 @@ function HomePage() {
       <Banner />
       <div className="w-full  grid grid-cols-5 grid-rows-2 gap-[30px] p-[30px] ">
         {images.map((item: ImageDataProps, idx) => {
+          // let isBookmarked =
           return (
             <ImageCard key={`${idx}-image-card`}>
               <ImageThumbnail data={item} />
