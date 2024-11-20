@@ -37,10 +37,10 @@ function Header() {
         </Avatar>
         {/* 유저 닉네임 & 이메일 */}
         <div className="flex items-center gap-1">
-          <small className="text-base font-medium leading-none">9Diin</small>
+          <small className="text-base font-medium leading-none">leh9111</small>
           &middot;
           <small className="text-base font-medium leading-none">
-            9Diin@gmail.com
+            leh119119@gmail.com
           </small>
         </div>
       </div>

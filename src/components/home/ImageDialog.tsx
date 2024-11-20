@@ -18,88 +18,34 @@ import {
 
 import { ImageDataType } from '@/types';
 import { useToast } from '@/hooks/use-toast';
-import { useState } from 'react';
+import { useAtom } from 'jotai';
+import { bookmarksAtom, BookmarkType } from '@/store/bookmarkstore';
 
 function ImageDialog({ data }: { data: ImageDataType }) {
   const { toast } = useToast();
-  const [isMarked, setIsMarked] = useState(false);
+  const [bookmarks, setBookmarks] = useAtom<BookmarkType>(bookmarksAtom);
+  const isMarked = bookmarks.findIndex((item) => item.id === data.id) > -1;
+
   const addBookmark = (imageData: ImageDataType) => {
-    console.log('동작');
-    console.log(imageData);
+    const newBookmarks: BookmarkType = [...bookmarks, imageData];
+    setBookmarks(newBookmarks);
+    localStorage.setItem('bookmark', JSON.stringify(newBookmarks));
 
-    const getLocalStorage = localStorage.getItem('bookmark');
-    let bookmarks: ImageDataType[] = [];
-
-    if (getLocalStorage) {
-      try {
-        bookmarks = JSON.parse(getLocalStorage);
-      } catch (error) {
-        console.error('Error parsing localStorage:', error);
-        bookmarks = [];
-      }
-    }
-    console.log(bookmarks);
-    if (bookmarks.length === 0) {
-      localStorage.setItem('bookmark', JSON.stringify([imageData]));
-      toast({
-        title: '로컬스토리지에 올바르게 저장되었습니다.',
-      });
-    } else {
-      const imageExists =
-        bookmarks.findIndex((item: ImageDataType) => item.id === imageData.id) >
-        -1;
-
-      if (imageExists) {
-        toast({
-          variant: 'destructive',
-          title: '로컬스토리지에 해당 데이터가 이미 저장되어 있습니다.',
-        });
-      } else {
-        bookmarks.push(imageData);
-        localStorage.setItem('bookmark', JSON.stringify(bookmarks));
-
-        toast({
-          title: '로컬스토리지에 올바르게 저장되었습니다.',
-        });
-      }
-    }
+    toast({
+      title: '로컬스토리지에 올바르게 저장되었습니다.',
+    });
   };
-  {
-    /* 
-      <DialogTrigger asChild>
-          className={`w-[250px] h-[150px] rounded-xl border border-red-400 bg-[url(${data.urls.small})] bg-cover`}
-        > </DialogTrigger>
-     */
-  }
+
   const removeBookmark = (imageData: ImageDataType) => {
-    console.log('동작');
-    console.log(imageData);
+    const newBookmarks = bookmarks.filter((book) => book.id !== imageData.id);
+    setBookmarks(newBookmarks);
 
-    const getLocalStorage = localStorage.getItem('bookmark');
-    let bookmarks: ImageDataType[] = [];
+    localStorage.setItem('bookmark', JSON.stringify(newBookmarks));
 
-    if (getLocalStorage) {
-      try {
-        bookmarks = JSON.parse(getLocalStorage);
-      } catch (error) {
-        console.error('Error parsing localStorage:', error);
-        bookmarks = [];
-      }
-    }
-    console.log(bookmarks);
-
-    const imageExists =
-      bookmarks.findIndex((item: ImageDataType) => item.id === imageData.id) >
-      -1;
-
-    if (imageExists) {
-      const newBookmarks = bookmarks.filter((book) => book.id !== imageData.id);
-      localStorage.setItem('bookmark', JSON.stringify(newBookmarks));
-      toast({
-        variant: 'destructive',
-        title: '로컬스토리지에 해당 데이터가 삭제되었습니다.',
-      });
-    }
+    toast({
+      variant: 'destructive',
+      title: '로컬스토리지에 해당 데이터가 삭제되었습니다.',
+    });
   };
 
   return (
@@ -134,7 +80,6 @@ function ImageDialog({ data }: { data: ImageDataType }) {
               variant={'secondary'}
               onClick={() => {
                 removeBookmark(data);
-                setIsMarked(false);
               }}
               className="bg-slate-700 text-white hover:bg-red-500"
             >
@@ -145,7 +90,6 @@ function ImageDialog({ data }: { data: ImageDataType }) {
               variant={'secondary'}
               onClick={() => {
                 addBookmark(data);
-                setIsMarked(true);
               }}
               className="hover:bg-slate-400"
             >

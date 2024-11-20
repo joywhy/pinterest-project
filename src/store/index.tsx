@@ -11,7 +11,7 @@ export const fetchApi = async (searchValue: string, page: number) => {
 
   try {
     const res = await axios.get(
-      `${BASE_URL}?query=${searchValue}&page=${page}&per_page=30&client_id=${API_KEY}`
+      `${BASE_URL}?query=${searchValue}&page=${page}&per_page=2&client_id=${API_KEY}`
     );
     return res; // 필요한 데이터만 반환
   } catch (error) {
@@ -19,4 +19,3 @@ export const fetchApi = async (searchValue: string, page: number) => {
     throw error; // 오류를 던져서 나중에 처리할 수 있게 함
   }
 };
-axios;

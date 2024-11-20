@@ -13,8 +13,8 @@ function App() {
         <Route element={<CommonLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/search/*" element={<Home />} />
+          <Route path="/bookmark" element={<Bookmark />} />
         </Route>
-        <Route path="/bookmark" element={<Bookmark />} />
       </Routes>
       <Toaster />
     </BrowserRouter>
@@ -25,7 +25,7 @@ function CommonLayout() {
     <div className="page">
       <div className="page__container">
         <Header />
-        <Nav />
+
         <Outlet />
       </div>
     </div>

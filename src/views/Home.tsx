@@ -1,23 +1,24 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useAtom } from 'jotai';
-import { searchValueAtom, pageAtom, fetchApi } from '@/store';
-import Banner from '../components/home/Banner';
+import { useState, useEffect, useCallback } from 'react'; //-
+import { useAtom } from 'jotai'; //-
+import { searchValueAtom, pageAtom, fetchApi } from '@/store'; //-
+//-
+import Banner from '../components/home/Banner'; //-
 import {
   ImageThumbnail,
   ImageCardContent,
-  // ImageDataProps,
   ImageCard,
   ImageTitle,
   ImageDescription,
-} from '@/components/home/ImageCard';
-import { useToast } from '@/hooks/use-toast';
+} from '@/components/home/ImageCard'; //-
+import { useToast } from '@/hooks/use-toast'; //-
+import { Nav } from '@/components/common';
+import { ImageDataType } from '@/types';
 
-function HomePage() {
+export default function HomePage() {
   const { toast } = useToast();
-  const [searchValue, setSearchValue] = useAtom(searchValueAtom);
+  const [searchValue] = useAtom(searchValueAtom);
   const [page] = useAtom(pageAtom);
   const [images, setImages] = useState([]);
-
   // const [pageIndex] = useState<number>(0);
 
   // const data: ImageDataProps[] = [
@@ -28,49 +29,48 @@ function HomePage() {
   //     img: '',
   //     like: 1234,
   //   },
-  //   {
-  //     id: 1,
-  //     des: '조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한',
-  //     date: '2024-11-15',
-  //     img: '',
-  //     like: 1234,
-  //   },
-  //   {
-  //     id: 1,
-  //     des: '조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한',
-  //     date: '2024-11-15',
-  //     img: '',
-  //     like: 1234,
-  //   },
-  //   {
-  //     id: 1,
-  //     des: '조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한',
-  //     date: '2024-11-15',
-  //     img: '',
-  //     like: 1234,
-  //   },
-  //   {
-  //     id: 1,
-  //     des: '조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한',
-  //     date: '2024-11-15',
-  //     img: '',
-  //     like: 1234,
-  //   },
-  //   {
-  //     id: 1,
-  //     des: '조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한',
-  //     date: '2024-11-15',
-  //     img: '',
-  //     like: 1234,
-  //   },
+  //   {//-
+  //     id: 1,//-
+  //     des: '조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한',//-
+  //     date: '2024-11-15',//-
+  //     img: '',//-
+  //     like: 1234,//-
+  //   },//-
+  //   {//-
+  //     id: 1,//-
+  //     des: '조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한',//-
+  //     date: '2024-11-15',//-
+  //     img: '',//-
+  //     like: 1234,//-
+  //   },//-
+  //   {//-
+  //     id: 1,//-
+  //     des: '조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한',//-
+  //     date: '2024-11-15',//-
+  //     img: '',//-
+  //     like: 1234,//-
+  //   },//-
+  //   {//-
+  //     id: 1,//-
+  //     des: '조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한',//-
+  //     date: '2024-11-15',//-
+  //     img: '',//-
+  //     like: 1234,//-
+  //   },//-
+  //   {//-
+  //     id: 1,//-
+  //     des: '조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한 설명란입니다. 조회한 이미지에 대한',//-
+  //     date: '2024-11-15',//-
+  //     img: '',//-
+  //     like: 1234,//-
+  //   },//-
+  //   // ...//+
   // ].slice(pageIndex, 6);
-  //  6개 미만일때도 생각
+  //  6개 미만일때도 생각//-
 
   const fetchImages = useCallback(async () => {
     try {
       const res = await fetchApi(searchValue, page);
-      console.log(res);
-      console.log(searchValue);
 
       if (res.status === 200 && res.data) {
         setImages(res.data.results);
@@ -96,13 +96,14 @@ function HomePage() {
 
   useEffect(() => {
     fetchImages();
-  }, [searchValue, page, fetchImages]);
+  }, [searchValue, page]);
 
   return (
     <div className="w-full  ">
+      <Nav />
       <Banner />
       <div className="w-full  grid grid-cols-5 grid-rows-2 gap-[30px] p-[30px] ">
-        {images.map((item: ImageDataProps, idx) => {
+        {images.map((item: ImageDataType, idx) => {
           // let isBookmarked =
           return (
             <ImageCard key={`${idx}-image-card`}>
@@ -120,6 +121,5 @@ function HomePage() {
       </div>
     </div>
   );
-}
-
-export default HomePage;
+} //-
+//-

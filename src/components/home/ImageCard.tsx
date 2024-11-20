@@ -1,10 +1,8 @@
 import { FolderOpen, Heart } from 'lucide-react';
 import { ImageDataType } from '@/types';
 import { ImageDialog } from './ImageDialog';
-import { Button, Dialog, DialogTrigger } from '../ui';
-interface Props {
-  data: ImageDataType;
-}
+import { Dialog, DialogTrigger } from '../ui';
+
 function ImageCard({ children }: { children: React.ReactNode }): JSX.Element {
   return (
     <div className="transition duration-120 ease-out hover:scale-105 cursor-pointer">
@@ -12,7 +10,7 @@ function ImageCard({ children }: { children: React.ReactNode }): JSX.Element {
     </div>
   );
 }
-function ImageThumbnail({ data }: { data: Props }) {
+function ImageThumbnail({ data }: { data: ImageDataType }) {
   return (
     <div className="w-full  rounded-md relative ">
       <Dialog>
@@ -22,12 +20,9 @@ function ImageThumbnail({ data }: { data: Props }) {
             alt={data.alt_description}
             className={`w-[250px] h-[150px] rounded-xl object-cover`}
           />
-          <Button
-            size={'icon'}
-            className="absolute top-2 right-4 z-10 bg-neutral-500 bg-opacity-50 hover:bg-opacity-50"
-          >
-            <FolderOpen className="h-5 w-5" />
-          </Button>
+          <div className="p-2 rounded hover:bg-slate-400 text-white absolute top-2 right-4 z-10 bg-neutral-500 bg-opacity-50 hover:bg-opacity-50">
+            <FolderOpen className="h-4 w-4" />
+          </div>
         </DialogTrigger>
         <ImageDialog data={data} />
       </Dialog>
