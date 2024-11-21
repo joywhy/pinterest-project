@@ -1,25 +1,41 @@
-import { useState, useEffect, useCallback } from 'react'; //-
-import { useAtom } from 'jotai'; //-
-import { searchValueAtom, pageAtom, fetchApi } from '@/store'; //-
-//-
-import Banner from '../components/home/Banner'; //-
+import { useState, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
+
+import { useAtom } from 'jotai';
+import {
+  searchValueAtom,
+  pageAtom,
+  // totalImageNumAtom,
+  fetchApi,
+  totalImageNumAtom,
+} from '@/store';
+
+import { ImageDataType } from '@/types';
+
+import Banner from '../components/home/Banner';
+import { Nav } from '@/components/common';
 import {
   ImageThumbnail,
   ImageCardContent,
   ImageCard,
   ImageTitle,
   ImageDescription,
-} from '@/components/home/ImageCard'; //-
-import { useToast } from '@/hooks/use-toast'; //-
-import { Nav } from '@/components/common';
-import { ImageDataType } from '@/types';
+} from '@/components/home/ImageCard';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
 
 export default function HomePage() {
   const { toast } = useToast();
   const [searchValue] = useAtom(searchValueAtom);
-  const [page] = useAtom(pageAtom);
+  const [page, setPage] = useAtom(pageAtom);
   const [images, setImages] = useState([]);
-  // const [pageIndex] = useState<number>(0);
 
   // const data: ImageDataProps[] = [
   //   {
@@ -67,13 +83,18 @@ export default function HomePage() {
   //   // ...//+
   // ].slice(pageIndex, 6);
   //  6개 미만일때도 생각//-
+  const [, setTotalImageNum] = useAtom(totalImageNumAtom);
 
   const fetchImages = useCallback(async () => {
     try {
+      console.log('apie 전');
+      console.log('page', page);
       const res = await fetchApi(searchValue, page);
-
+      console.log(res);
       if (res.status === 200 && res.data) {
         setImages(res.data.results);
+        setTotalImageNum(res.data.total);
+        console.log('성공');
         toast({
           title: 'Unsplash API 호출 성공!!',
         });
@@ -92,11 +113,11 @@ export default function HomePage() {
         description: 'API 호출을 위한 필수 파라미터 값을 체크해보세요!',
       });
     }
-  }, [searchValue, page, toast]);
+  }, [searchValue, page, toast, setTotalImageNum]);
 
   useEffect(() => {
     fetchImages();
-  }, [searchValue, page]);
+  }, [fetchImages]);
 
   return (
     <div className="w-full  ">
@@ -118,7 +139,79 @@ export default function HomePage() {
           );
         })}
       </div>
+      <BasicPagination />
     </div>
   );
-} //-
-//-
+}
+
+export function BasicPagination() {
+  const { pathname } = useLocation();
+
+  const [page, setPage] = useAtom(pageAtom); //1
+  const perPage = 30;
+  const [total] = useAtom(totalImageNumAtom);
+  const totalPage = Math.ceil(total / perPage); //334
+
+  const onClickPageNumber = (type: string, num?: number) => {
+    console.log('num', num);
+    console.log('type', type);
+    if (type === 'prev') {
+      if (page === 1) {
+        setPage(1);
+      } else {
+        setPage((prev) => prev - 1);
+      }
+    }
+    if (type === 'next') {
+      if (page === totalPage) {
+        setPage(totalPage);
+      } else {
+        setPage((prev) => prev + 1);
+      }
+    }
+    if (type === 'num' && num) {
+      console.log('동작하라고요');
+      console.log('num 네 ?', num);
+      // fetchApi('', num);
+      setPage(num);
+    }
+  };
+  const pageList = Array.from({ length: 10 }, (_, index) => {
+    return Math.floor((page - 1) / 10) * 10 + index + 1;
+  });
+
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem
+          onClick={(e) => {
+            e.preventDefault();
+            onClickPageNumber('prev');
+          }}
+        >
+          <PaginationPrevious href={`${pathname}`} />
+        </PaginationItem>
+        {pageList.map((item) => (
+          <PaginationItem
+            key={'page' + item}
+            onClick={(e) => {
+              e.preventDefault(); //이벤트
+              onClickPageNumber('num', item);
+            }}
+            className={item === page ? 'bg-blue-200 rounded' : ''}
+          >
+            <PaginationLink href={`${pathname}`}>{item}</PaginationLink>
+          </PaginationItem>
+        ))}
+        <PaginationItem
+          onClick={(e) => {
+            e.preventDefault();
+            onClickPageNumber('next');
+          }}
+        >
+          <PaginationNext href={`${pathname}`} />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  );
+}
