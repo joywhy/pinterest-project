@@ -94,6 +94,7 @@ export default function HomePage() {
       if (res.status === 200 && res.data) {
         setImages(res.data.results);
         setTotalImageNum(res.data.total);
+        console.log('성공');
         toast({
           title: 'Unsplash API 호출 성공!!',
         });
@@ -169,10 +170,12 @@ export function BasicPagination() {
       }
     }
     if (type === 'num' && num) {
+      console.log('동작하라고요');
+      console.log('num 네 ?', num);
+      // fetchApi('', num);
       setPage(num);
     }
   };
-
   const pageList = Array.from({ length: 10 }, (_, index) => {
     return Math.floor((page - 1) / 10) * 10 + index + 1;
   });
@@ -180,19 +183,32 @@ export function BasicPagination() {
   return (
     <Pagination>
       <PaginationContent>
-        <PaginationItem onClick={() => onClickPageNumber('prev')}>
+        <PaginationItem
+          onClick={(e) => {
+            e.preventDefault();
+            onClickPageNumber('prev');
+          }}
+        >
           <PaginationPrevious href={`${pathname}`} />
         </PaginationItem>
         {pageList.map((item) => (
           <PaginationItem
             key={'page' + item}
-            onClick={() => onClickPageNumber('num', item)}
+            onClick={(e) => {
+              e.preventDefault(); //이벤트
+              onClickPageNumber('num', item);
+            }}
             className={item === page ? 'bg-blue-200 rounded' : ''}
           >
             <PaginationLink href={`${pathname}`}>{item}</PaginationLink>
           </PaginationItem>
         ))}
-        <PaginationItem onClick={() => onClickPageNumber('next')}>
+        <PaginationItem
+          onClick={(e) => {
+            e.preventDefault();
+            onClickPageNumber('next');
+          }}
+        >
           <PaginationNext href={`${pathname}`} />
         </PaginationItem>
       </PaginationContent>
